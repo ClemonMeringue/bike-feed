@@ -3,7 +3,7 @@
 import calendar, difflib, hashlib, html, json, math, os, re, urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 from xml.sax.saxutils import escape
 
 # ============================ CONFIG (edit here) ============================
@@ -12,7 +12,7 @@ SHORT_NAME = "Bike Releases"
 DESCRIPTION = "New bike and bike part launches from the cycling press, refreshed every few hours."
 BRAND = "#0B6E4F"   # brand colour (icons, buttons, badges). Keep it dark enough for white text.
 KEEP_DAYS = 60      # history length
-EMBED_LIMIT = 220   # newest items embedded in index.html (data.json holds everything)
+EMBED_LIMIT = 180   # newest items embedded in index.html (data.json holds everything)
 FEED_LIMIT = 50     # items in feed.xml
 TIMEOUT = 20        # seconds per feed
 
@@ -75,7 +75,7 @@ CATEGORY_RULES = [
 # ============================================================================
 
 FMT = "%Y-%m-%dT%H:%M:%SZ"
-FIELDS = dict(title="", link="", source="", published="", category="Other", discipline="General", snippet="")
+FIELDS = dict(title="", link="", source="", published="", category="Other", discipline="General", snippet="", image="")
 USER_AGENT = f"BikeReleasesBot/1.0 (+https://github.com/{os.environ.get('GITHUB_REPOSITORY', 'your/repo')})"
 rx = lambda ws: re.compile(r"(?<![\w-])(?:" + "|".join(re.escape(w) for w in sorted(ws, key=len, reverse=True)) + r")(?![\w-])")
 POS_RE, NEG_RE = rx(POSITIVE), rx(NEGATIVE)
@@ -83,6 +83,8 @@ DISC_RE = [(n, rx(w)) for n, w in DISCIPLINE_RULES]
 CAT_RE = [(n, rx(w)) for n, w in CATEGORY_RULES]
 TRACK = re.compile(r"^(utm_.*|fbclid|gclid|mc_.*|cmpid|ocid|igshid|ref|ref_.*|source|campaign)$", re.I)
 TAGS = re.compile(r"<[^>]*>")
+IMG_RE = re.compile(r"<img\b[^>]*?\bsrc=[\"']([^\"']+)[\"'][^>]*>", re.I)
+BAD_IMG = re.compile(r"pixel|tracking|spacer|blank|1x1|feedburner|gravatar|emoji|logo|\.svg|\.gif", re.I)
 
 
 def norm(t):
@@ -139,6 +141,23 @@ def parse_iso(s):
     return datetime.strptime(s, FMT).replace(tzinfo=timezone.utc)
 
 
+def find_image(e, link):
+    """Best image URL for an entry (hotlinked, never downloaded): media tags, enclosures, then first <img>."""
+    c = [m.get("url") for k in ("media_thumbnail", "media_content") for m in e.get(k) or []
+         if m.get("medium") != "video" and not str(m.get("type", "")).startswith("video")]
+    c += [x.get("href") for x in e.get("enclosures") or [] if str(x.get("type", "")).startswith("image")]
+    for h in [e.get("summary") or "", *[x.get("value", "") for x in e.get("content") or []]]:
+        for m in IMG_RE.finditer(h):
+            w = re.search(r"width=[\"']?(\d+)", m.group(0))
+            if not (w and int(w.group(1)) < 80):
+                c.append(m.group(1))
+    for u in c:
+        u = urljoin(link, html.unescape(str(u or "")).strip())
+        if u.startswith(("http://", "https://")) and len(u) <= 400 and not BAD_IMG.search(u):
+            return "https://" + u.split("://", 1)[1]
+    return ""
+
+
 def to_item(e, name, disc, now):
     title, link = clean(e.get("title")), clean_url(str(e.get("link") or ""))
     if not title or not link.startswith(("http://", "https://")) or score(title)[0] < THRESHOLD:
@@ -150,7 +169,8 @@ def to_item(e, name, disc, now):
     if tkey(snip) == tkey(title):
         snip = ""
     return dict(title=title, link=link, source=name, published=pub.strftime(FMT),
-                category=first(CAT_RE, title, "Other"), discipline=first(DISC_RE, title, disc), snippet=snip)
+                category=first(CAT_RE, title, "Other"), discipline=first(DISC_RE, title, disc), snippet=snip,
+                image=find_image(e, link))
 
 
 def fetch(url):
@@ -188,11 +208,18 @@ def collect(items, now):
             for e in feed.entries:
                 try:
                     it = to_item(e, name, disc, now)
-                    if not it or parse_iso(it["published"]) < cutoff or ukey(it["link"]) in items or is_dup(it["title"], name, seen):
+                    if not it or parse_iso(it["published"]) < cutoff:
+                        continue
+                    k = ukey(it["link"])
+                    if k in items:  # already stored: just backfill a missing image
+                        if it["image"] and not items[k]["image"]:
+                            items[k]["image"] = it["image"]
+                        continue
+                    if is_dup(it["title"], name, seen):
                         continue
                 except Exception:
                     continue  # malformed entry
-                items[ukey(it["link"])] = it
+                items[k] = it
                 seen.append((tkey(it["title"]), name))
                 kept += 1
             print(f"OK    {name}: {len(feed.entries)} entries, {kept} new launches kept")
