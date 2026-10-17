@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>New Bike Releases</title>
+<meta name="description" content="New bike and bike part launches from the cycling press, refreshed every few hours.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171c20" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://USER.github.io/REPO/">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="alternate" type="application/atom+xml" title="New Bike Releases" href="feed.xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="New Bike Releases">
+<meta property="og:description" content="New bike and bike part launches from the cycling press, refreshed every few hours.">
+<meta property="og:url" content="https://USER.github.io/REPO/">
+<meta property="og:image" content="https://USER.github.io/REPO/icon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="New Bike Releases">
+<meta name="twitter:description" content="New bike and bike part launches from the cycling press, refreshed every few hours.">
+<meta name="twitter:image" content="https://USER.github.io/REPO/icon-512.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Bike Releases">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+:root{color-scheme:light dark;--bg:#f3f4f6;--card:#fff;--text:#14181c;--muted:#566070;--line:#d6dae0;--chip:#e8ebef;--brand:%BRAND%;--ring:#1d4ed8}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1215;--card:#171c20;--text:#e8ecef;--muted:#a3adb7;--line:#2b333a;--chip:#232a30;--ring:#93c5fd}}
+:root[data-theme=dark]{color-scheme:dark;--bg:#0e1215;--card:#171c20;--text:#e8ecef;--muted:#a3adb7;--line:#2b333a;--chip:#232a30;--ring:#93c5fd}
+:root[data-theme=light]{color-scheme:light}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100dvh;background:var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;touch-action:manipulation}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+:focus-visible{outline:3px solid var(--ring);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+.bar{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top);transition:transform .2s}
+.bar.hide{transform:translateY(-100%)}
+.tools{display:flex;gap:8px;align-items:center;padding:8px 0}
+#q{flex:1;min-width:0;height:44px;padding:0 16px;font-size:16px;border:1px solid var(--line);border-radius:22px;background:var(--bg)}
+#q::placeholder{color:var(--muted);opacity:1}
+.ico{flex:none;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--card)}
+.ico:disabled{opacity:.6}
+.spin svg{animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.row{display:flex;gap:8px;overflow-x:auto;padding:0 0 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.row::-webkit-scrollbar{display:none}
+.lbl{flex:none;align-self:center;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);min-width:4.6rem}
+.chip{flex:none;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:22px;background:var(--chip);white-space:nowrap}
+.chip[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+.chip:active,.pill:active,.ico:active{transform:scale(.97)}
+.intro{padding-top:16px}
+h1{margin:0;font-size:1.4rem;line-height:1.2}
+.sub{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+.status{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;padding:10px 0;color:var(--muted);font-size:.9rem;min-height:64px}
+.pill{min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:22px;background:var(--card);color:var(--text)}
+.pill.big{display:block;margin:20px auto 0}
+.grid{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+.card{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.card h2{margin:0;font-size:1.05rem;line-height:1.3;overflow-wrap:anywhere}
+.card h2 a{color:inherit;text-decoration:none}
+.card h2 a::after{content:"";position:absolute;inset:0;border-radius:14px}
+.card h2 a:focus-visible{outline:none}
+.card h2 a:focus-visible::after{outline:3px solid var(--ring);outline-offset:2px}
+.tags,.meta{display:flex;flex-wrap:wrap;gap:6px 10px;margin:0;align-items:center}
+.meta{font-size:.85rem;color:var(--muted)}
+.tag{font-size:.75rem;padding:2px 8px;border-radius:10px;background:var(--chip);border:1px solid var(--line)}
+.new{font-size:.7rem;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:10px;background:var(--brand);color:#fff}
+.snip{margin:0;color:var(--muted);font-size:.92rem;overflow-wrap:anywhere}
+.empty{padding:32px 0;text-align:center;color:var(--muted)}
+main{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+.toasts{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 12px calc(12px + env(safe-area-inset-bottom));pointer-events:none}
+.toast{pointer-events:auto;max-width:100%;min-height:44px;padding:10px 18px;border:0;border-radius:22px;background:var(--text);color:var(--bg);font-weight:600;text-align:center}
+.toast[hidden]{display:none}
+@media(min-width:640px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:900px){.row{flex-wrap:wrap;overflow:visible}.lbl{min-width:6rem}}
+@media(hover:hover) and (pointer:fine){.chip{min-height:36px}.card:hover{border-color:var(--brand)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="bar" id="bar">
+  <div class="wrap">
+    <div class="tools">
+      <label class="sr" for="q">Search releases</label>
+      <input id="q" type="search" placeholder="Search releases  (press /)" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+      <button id="refresh" class="ico" type="button" aria-label="Refresh releases"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg></button>
+      <button id="theme" class="ico" type="button" aria-label="Switch between light and dark theme"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg></button>
+    </div>
+    <nav aria-label="Filters">
+      <div class="row" id="rd" role="group" aria-label="Discipline"><span class="lbl" aria-hidden="true">Discipline</span></div>
+      <div class="row" id="rc" role="group" aria-label="Category"><span class="lbl" aria-hidden="true">Category</span></div>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <div class="intro"><h1>New bike releases</h1><p class="sub" id="sub">Loading…</p></div>
+  <div class="status"><span id="count" role="status" aria-live="polite"></span><button id="seen" class="pill" type="button" hidden>Mark all as seen</button></div>
+  <div id="list" class="grid"></div>
+  <div id="empty" class="empty" hidden><p id="emsg"></p><button id="clear" class="pill" type="button">Clear filters</button></div>
+  <button id="more" class="pill big" type="button" hidden>Show more</button>
+  <noscript><p>Please enable JavaScript to browse releases, or subscribe to the <a href="feed.xml">Atom feed</a>.</p></noscript>
+</main>
+<div class="sr" id="live" role="status" aria-live="polite"></div>
+<div class="toasts">
+  <div id="offline" class="toast" role="status" hidden>Offline, showing saved items</div>
+  <button id="upd" class="toast" type="button" hidden>Update available, tap to refresh</button>
+</div>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id),PAGE=60,bar=$('bar');
+let D=JSON.parse($('data').textContent),S={q:'',d:'',c:'',n:PAGE},reg=null;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const el=(t,a={},k=[])=>{const e=document.createElement(t);for(const x in a)x==='text'?e.textContent=a[x]:e.setAttribute(x,a[x]);k.forEach(c=>e.append(c));return e};
+let seen=+store.get('lastVisit')||0;if(!seen){seen=Date.now();store.set('lastVisit',seen)}
+const rtf=new Intl.RelativeTimeFormat('en',{numeric:'auto'});
+const ago=t=>{const s=(t-Date.now())/1e3,a=Math.abs(s);return a<3600?rtf.format(Math.round(s/60),'minute'):a<86400?rtf.format(Math.round(s/3600),'hour'):a<2592e3?rtf.format(Math.round(s/86400),'day'):new Date(t).toLocaleDateString()};
+const prep=()=>{D.items.forEach(i=>{i.t=Date.parse(i.published);i.s=(i.title+' '+i.snippet+' '+i.source).toLowerCase()});D.items.sort((a,b)=>b.t-a.t)};
+const sub=()=>{$('sub').textContent='Updated '+ago(Date.parse(D.updated))+' · refreshed every few hours'};
+const mk=(box,vals,k,label)=>['All',...vals].forEach(v=>box.append(el('button',{type:'button',class:'chip','data-k':k,'data-v':v==='All'?'':v,'aria-pressed':'false','aria-label':label+': '+v,text:v})));
+const readURL=()=>{const p=new URLSearchParams(location.search),g=k=>p.get(k)||'';S.q=g('q').trim();S.d=D.disciplines.includes(g('d'))?g('d'):'';S.c=D.categories.includes(g('c'))?g('c'):'';$('q').value=S.q};
+const writeURL=()=>{const p=new URLSearchParams();S.q&&p.set('q',S.q);S.d&&p.set('d',S.d);S.c&&p.set('c',S.c);const s=p.toString();try{history.replaceState(null,'',location.pathname+(s?'?'+s:''))}catch(e){}};
+const card=i=>{
+  const a=el('a',{href:/^https?:\/\//.test(i.link)?i.link:'#',target:'_blank',rel:'noopener noreferrer',text:i.title});
+  return el('article',{class:'card'},[
+    el('div',{class:'tags'},[...(i.t>seen?[el('span',{class:'new',text:'New'})]:[]),el('span',{class:'tag',text:i.category}),el('span',{class:'tag',text:i.discipline})]),
+    el('h2',{},[a]),
+    i.snippet?el('p',{class:'snip',text:i.snippet}):'',
+    el('p',{class:'meta'},[el('span',{text:i.source}),el('time',{datetime:i.published,title:new Date(i.t).toLocaleString(),text:ago(i.t)})])
+  ]);
+};
+const render=()=>{
+  const w=S.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const L=D.items.filter(i=>(!S.d||i.discipline===S.d)&&(!S.c||i.category===S.c)&&w.every(x=>i.s.includes(x)));
+  const nn=L.filter(i=>i.t>seen).length,f=document.createDocumentFragment();
+  L.slice(0,S.n).forEach(i=>f.append(card(i)));
+  $('list').replaceChildren(f);
+  $('count').textContent=L.length+(L.length===1?' release':' releases')+(nn?' · '+nn+' new':'');
+  $('seen').hidden=!D.items.some(i=>i.t>seen);
+  $('empty').hidden=!!L.length;
+  $('emsg').textContent=D.items.length?'No releases match these filters.':'No releases collected yet. The first scheduled run may still be in progress.';
+  $('clear').hidden=!D.items.length;
+  const left=L.length-S.n;$('more').hidden=left<=0;$('more').textContent='Show more ('+left+' left)';
+  document.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed',String(S[b.dataset.k]===b.dataset.v)));
+  sub();
+};
+const off=v=>{$('offline').hidden=!v};
+const adopt=n=>{
+  if(!n||!Array.isArray(n.items)||!n.updated||n.updated<D.updated||(n.updated===D.updated&&n.items.length<=D.items.length))return false;
+  const same=n.items.length===D.items.length&&n.items[0]&&D.items[0]&&n.items[0].link===D.items[0].link;
+  D=n;prep();same?sub():render();return true;
+};
+const load=async fresh=>{
+  try{const r=await fetch('data.json'+(fresh?'?fresh='+Date.now():''));if(!r.ok)throw 0;const ch=adopt(await r.json());off(false);return ch}
+  catch(e){off(true);return false}
+};
+const setMeta=t=>document.querySelectorAll('meta[name=theme-color]').forEach(m=>{m.removeAttribute('media');m.content=t==='dark'?'#171c20':'#ffffff'});
+const clearAll=()=>{S.q=S.d=S.c='';$('q').value='';S.n=PAGE;writeURL();render()};
+const stamp=()=>store.set('lastVisit',Date.now());
+
+document.addEventListener('click',e=>{const b=e.target.closest('.chip');if(b){S[b.dataset.k]=b.dataset.v;S.n=PAGE;writeURL();render()}});
+$('q').addEventListener('input',e=>{S.q=e.target.value.trim();S.n=PAGE;writeURL();render()});
+$('more').onclick=()=>{S.n+=PAGE;render()};
+$('clear').onclick=clearAll;
+$('seen').onclick=()=>{seen=Date.now();stamp();render()};
+$('theme').onclick=()=>{const cur=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'),t=cur==='dark'?'light':'dark';document.documentElement.dataset.theme=t;store.set('theme',t);setMeta(t)};
+$('refresh').onclick=async()=>{
+  const b=$('refresh');b.classList.add('spin');b.disabled=true;
+  const ch=await load(true);if(reg)reg.update().catch(()=>{});
+  b.classList.remove('spin');b.disabled=false;
+  const m=ch?'New releases loaded':'Already up to date';$('live').textContent=m;$('sub').textContent=m;setTimeout(sub,3000);
+};
+document.addEventListener('keydown',e=>{
+  const q=$('q'),tag=document.activeElement&&document.activeElement.tagName;
+  if(e.key==='/'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!/^(INPUT|TEXTAREA|SELECT)$/.test(tag)){e.preventDefault();bar.classList.remove('hide');q.focus();q.select()}
+  else if(e.key==='Escape'){if(S.q){S.q='';q.value='';S.n=PAGE;writeURL();render()}else if(document.activeElement===q)q.blur()}
+});
+const phone=matchMedia('(max-width:899px)');let ly=scrollY;
+addEventListener('scroll',()=>{
+  const y=scrollY,d=y-ly;
+  if(!phone.matches||y<=120){bar.classList.remove('hide');ly=y;return}
+  if(Math.abs(d)<6)return;
+  bar.classList.toggle('hide',d>0);ly=y;
+},{passive:true});
+bar.addEventListener('focusin',()=>bar.classList.remove('hide'));
+addEventListener('pagehide',stamp);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stamp();else if(reg)reg.update().catch(()=>{})});
+addEventListener('online',()=>{off(false);load(false)});
+addEventListener('offline',()=>off(true));
+
+prep();mk($('rd'),D.disciplines,'d','Discipline');mk($('rc'),D.categories,'c','Category');
+readURL();render();
+if(store.get('theme'))setMeta(store.get('theme'));
+if(!navigator.onLine)off(true);
+addEventListener('load',()=>setTimeout(()=>load(false),300));
+
+if('serviceWorker' in navigator){
+  const had=!!navigator.serviceWorker.controller;let reloading=false;
+  const ask=w=>{if(w&&had){$('upd').hidden=false;$('upd').onclick=()=>w.postMessage('SKIP_WAITING')}};
+  navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(r=>{
+    reg=r;ask(r.waiting);
+    r.addEventListener('updatefound',()=>{const w=r.installing;w&&w.addEventListener('statechange',()=>{if(w.state==='installed')ask(r.waiting||w)})});
+  }).catch(()=>{});
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!reloading){reloading=true;location.reload()}});
+}
+})();
+</script>
+</body>
+</html>
