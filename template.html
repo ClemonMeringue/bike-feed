@@ -63,6 +63,8 @@ h1{margin:0;font-size:1.4rem;line-height:1.2}
 .pill.big{display:block;margin:20px auto 0}
 .grid{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
 .card{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.thumb{margin:-14px -14px 0;aspect-ratio:16/9;background:var(--chip);border-radius:14px 14px 0 0;overflow:hidden}
+.thumb img{display:block;width:100%;height:100%;object-fit:cover}
 .card h2{margin:0;font-size:1.05rem;line-height:1.3;overflow-wrap:anywhere}
 .card h2 a{color:inherit;text-decoration:none}
 .card h2 a::after{content:"";position:absolute;inset:0;border-radius:14px}
@@ -129,9 +131,13 @@ const sub=()=>{$('sub').textContent='Updated '+ago(Date.parse(D.updated))+' · r
 const mk=(box,vals,k,label)=>['All',...vals].forEach(v=>box.append(el('button',{type:'button',class:'chip','data-k':k,'data-v':v==='All'?'':v,'aria-pressed':'false','aria-label':label+': '+v,text:v})));
 const readURL=()=>{const p=new URLSearchParams(location.search),g=k=>p.get(k)||'';S.q=g('q').trim();S.d=D.disciplines.includes(g('d'))?g('d'):'';S.c=D.categories.includes(g('c'))?g('c'):'';$('q').value=S.q};
 const writeURL=()=>{const p=new URLSearchParams();S.q&&p.set('q',S.q);S.d&&p.set('d',S.d);S.c&&p.set('c',S.c);const s=p.toString();try{history.replaceState(null,'',location.pathname+(s?'?'+s:''))}catch(e){}};
-const card=i=>{
+const card=(i,n)=>{
   const a=el('a',{href:/^https?:\/\//.test(i.link)?i.link:'#',target:'_blank',rel:'noopener noreferrer',text:i.title});
+  const im=i.image&&el('img',{src:i.image,alt:'',loading:n<2?'eager':'lazy',decoding:'async',referrerpolicy:'no-referrer'});
+  const th=im&&el('div',{class:'thumb'},[im]);
+  if(im)im.onerror=()=>th.remove();
   return el('article',{class:'card'},[
+    th||'',
     el('div',{class:'tags'},[...(i.t>seen?[el('span',{class:'new',text:'New'})]:[]),el('span',{class:'tag',text:i.category}),el('span',{class:'tag',text:i.discipline})]),
     el('h2',{},[a]),
     i.snippet?el('p',{class:'snip',text:i.snippet}):'',
@@ -142,7 +148,7 @@ const render=()=>{
   const w=S.q.toLowerCase().split(/\s+/).filter(Boolean);
   const L=D.items.filter(i=>(!S.d||i.discipline===S.d)&&(!S.c||i.category===S.c)&&w.every(x=>i.s.includes(x)));
   const nn=L.filter(i=>i.t>seen).length,f=document.createDocumentFragment();
-  L.slice(0,S.n).forEach(i=>f.append(card(i)));
+  L.slice(0,S.n).forEach((i,n)=>f.append(card(i,n)));
   $('list').replaceChildren(f);
   $('count').textContent=L.length+(L.length===1?' release':' releases')+(nn?' · '+nn+' new':'');
   $('seen').hidden=!D.items.some(i=>i.t>seen);
